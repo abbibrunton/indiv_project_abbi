@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block body_content %}
+	
+<h1>activities page</h1>
+<p>enter the details of your activities</p>
+	<div class="form">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+		<div class="form-group">
+			{{ form.name.label }}
+			{{ form.name }}
+			{% if form.name.errors %}
+			<div class="error">
+					{% for error in form.name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.location.label }}
+			{{ form.location }}
+			{% if form.location.errors %}
+			<div class="error">
+				{% for error in form.location.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				start time:
+				<input type="time" name="start">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				end time:
+				<input type="time" name="end">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.comments.label }}
+			{{ form.comments }}
+			{% if form.comments.errors %}
+			<div class="error">
+					{% for error in form.comments.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		{{ form.another }}
+		{{ form.submit }}
+		{{ form.cancel }}
+	</form>
+</div>
+
+{% endblock body_content %}

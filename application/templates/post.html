@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<h1>choose a name for your trip</h1>
+<div class="form">
+	<form method="POST" action="">
+		{{ form.hidden_tag() }}
+		<div class="form-group">
+			{{ form.name.label }}
+			{{ form.name }}
+			{% if form.name.errors %}
+			<div class="error">
+				{% for error in form.name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		{{ form.submit }}
+	</form>
+</div>
+
+
+{% endblock body_content %}

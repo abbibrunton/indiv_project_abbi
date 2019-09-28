@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block body_content %}
+	
+<h1>flights page</h1>
+<p>enter the details of your outbound flight</p>
+	<div class="form">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="date">
+				<!-- not closing form and idk why -->
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.depart.label }}
+			{{ form.depart }}
+			{% if form.depart.errors %}
+			<div class="error">
+				{% for error in form.depart.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time:
+				<input type="time" name="time_d">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.arrive.label }}
+			{{ form.arrive }}
+			{% if form.arrive.errors %}
+			<div class="error">
+				{% for error in form.arrive.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time of arrival:
+				<input type="time" name="time_a">
+		</div>
+		<br>
+		<div class="form-group">
+			<div class="form-group">
+			<form action="/action_page.php">
+				time of arrival (local):
+				<input type="time" name="time_a_l">
+		</div>
+		<br>
+		{{ form.submit }}
+	</form>
+</div>
+
+{% endblock body_content %}
