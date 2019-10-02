@@ -3,6 +3,28 @@
 	
 <h1>flights page</h1>
 <p>enter the details of your outbound flight</p>
+	<!-- <form action="", method="post">
+	<select name=holiday1 method="GET" action="">
+		{% for option in holidays %}
+			<option value="{{option}}" SELECTED>{{option}}</option>
+		{% endfor %}
+	</select>
+
+	</form>
+	<br> -->
+	<div class="form-group">
+		{{ form.holiday1.label }}
+		{{ form.holiday1 }}
+		{% if form.holiday1.errors %}
+			<div class="error">
+				{% for error in form.holiday1.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+		{% endif %}
+		
+	</div>
+	<br>
 	<div class="form">
 		<form method="POST" action="">
 			{{ form.hidden_tag() }}
@@ -10,7 +32,13 @@
 			<form action="/action_page.php">
 				date:
 				<input type="date" name="date">
-				<!-- not closing form and idk why -->
+				{% if form.date.errors %}
+				<div class="error">
+					{% for error in form.date.errors %}
+					<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
 		</div>
 		<br>
 		<div class="form-group">
@@ -54,6 +82,69 @@
 			<form action="/action_page.php">
 				time of arrival (local):
 				<input type="time" name="time_a_l">
+		</div>
+		<br>
+
+
+		<p>enter the details of your inbound flight</p>
+		<div class="form">
+		<form method="POST" action="">
+			{{ form.hidden_tag() }}
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="date1">
+				<!-- not closing form and idk why -->
+				{% if form.date1.errors %}
+				<div class="error">
+					{% for error in form.date1.errors %}
+					<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.depart1.label }}
+			{{ form.depart1 }}
+			{% if form.depart1.errors %}
+			<div class="error">
+				{% for error in form.depart1.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time:
+				<input type="time" name="time_d1">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.arrive1.label }}
+			{{ form.arrive1 }}
+			{% if form.arrive1.errors %}
+			<div class="error">
+				{% for error in form.arrive1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time of arrival:
+				<input type="time" name="time_a1">
+		</div>
+		<br>
+		<div class="form-group">
+			<div class="form-group">
+			<form action="/action_page.php">
+				time of arrival (local):
+				<input type="time" name="time_a_l1">
 		</div>
 		<br>
 		{{ form.submit }}

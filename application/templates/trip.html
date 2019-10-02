@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body_content %}
+	<h1>your trip</h1>
+	<!-- <p>here are the details for your trip</p> -->
+	{% for post in posts %}
+	<h3>{{ post.name }}</h3>
+	{% endfor %}
+
+	<p>you are leaving on</p>
+	{% for flight in flights %}
+		<div>
+			<span>{{ flight.date }}</span>
+			<p>you will be departing from {{ flight.depart }} at {{ flight.time_d }}</p>
+			<p>you will be arriving at {{ flight.arrive }} at {{ flight.time_a }}, which is {{ flight.time_a_l }} in local time.</p>
+		</div>
+	{% endfor %}
+
+	<p>you will be staying at</p>
+	{% for accommodation in accommodation %}
+		<div>
+			<span>{{ accommodation.name }}, which can be found at {{ accommodation.address }}</span>
+			<p>you will be checking in at {{ accommodation.in_time }} on {{ accommodation.arr_date }}</p>
+			<p>you will be checking out at {{ accommodation.out_time }} on {{ accommodation.out_date }}</p>
+			<p>other comments: {{ accommodation.comments }}
+		</div>
+	{% endfor %}
+
+	<p>your planned activities are:</p>
+	{% for activity in activities %}
+		<div>
+			<p>{{ activities.name }} at {{ activities.location }} on {{ activities.time }}</p>
+			<p>time: {{ activities.start }} - {{ activities.end }}</p>
+			<p>other info: {{ activities.comments }}</p>
+		</div>
+	{% endfor %}
+
+	<p>you are returning on</p>
+	{% for flight in flights %}
+		<div>
+			<span>{{ flight.date1 }}</span>
+			<p>you will be departing from {{ flight.depart1 }} at {{ flight.time_d1 }}</p>
+			<p>you will be arriving at {{ flight.arrive1 }} at {{ flight.time_a1 }}, which is {{ flight.time_a_l1 }} in local time.</p>
+		</div>
+	{% endfor %}
+
+{% endblock body_content %}

@@ -1,13 +1,18 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, DateField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from application.models import Users
-from application import bcrypt
+from application.models import Users, Posts
+from application import bcrypt, login_manager
 from flask_login import current_user
+#from application.routes import Holiday
 
 class PostForm(FlaskForm):
 	name = StringField('name', validators=[DataRequired(), Length(min=4, max=100)])
 	submit = SubmitField('next')
+	def validate_post(self, name):
+		post = Posts.query.filter_by(name=name.data).first()
+		if post:
+			raise ValidationError('name already in use')
 
 class RegistrationForm(FlaskForm):
 	first_name = StringField('first name', validators=[DataRequired(), Length(min=2, max=30)])
@@ -58,15 +63,40 @@ class UpdateAccountForm(FlaskForm):
 		current_user.delete()
 
 class FlightForm(FlaskForm):
-	date = StringField('date of flight: ', validators=[DataRequired(), Length(min=4, max=100)])
+	#holiday1 = SelectField('name of holiday: ', coerce=int)
+	#holiday = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
+	#print(str(Users.id))
+	cycle = []
+	lists = Posts.query.filter_by(user_id=1).all()
+	for i in range(int(len(lists))):
+		item = lists[i].name
+		temp = [item, item]
+		cycle.append(temp)
+	holiday1 = SelectField('Your Trip: ', choices=cycle)
+	print(holiday1)
+	date = StringField('date of flight: ', validators=[DataRequired()])
 	depart = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
-	time_d = StringField('time of departure: ', validators=[DataRequired(),Length(max=5)])
+	time_d = StringField('time of departure: ', validators=[DataRequired()])
 	arrive = StringField('arrival airport: ', validators=[DataRequired(), Length(min=4, max=100)])
-	time_a = StringField('time of arrival: ', validators=[DataRequired(),Length(max=5)])
-	time_a_l = StringField('time of arrival (local): ', validators=[DataRequired(),Length(max=5)])
+	time_a = StringField('time of arrival: ', validators=[DataRequired()])
+	time_a_l = StringField('time of arrival (local): ', validators=[DataRequired()])
+	date1 = StringField('date of flight: ', validators=[DataRequired()])
+	depart1 = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_d1 = StringField('time of departure: ', validators=[DataRequired()])
+	arrive1 = StringField('arrival airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_a1 = StringField('time of arrival: ', validators=[DataRequired()])
+	time_a_l1 = StringField('time of arrival (local): ', validators=[DataRequired()])
+
 	submit = SubmitField('next')
+	
+	# def add_choices(request):
+	# 	posts = Posts.query.filter_by(author=current_user)
+	# 	form = FlightForm(request.POST, obj=posts)
+	# 	form.holiday1.choices = [i for i in posts]
+		
 
 class AccommodationForm(FlaskForm):
+	#holiday = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
 	name = StringField('name of accommodation: ', validators=[DataRequired(), Length(min=4, max=100)])
 	address = StringField('address: ', validators=[DataRequired(), Length(min=4, max=100)])
 	arr_date = StringField('arrival date: ', validators=[DataRequired(),Length(max=10)])
@@ -77,12 +107,23 @@ class AccommodationForm(FlaskForm):
 	submit = SubmitField('next')
 
 class ActivitiesForm(FlaskForm):
+	#holiday = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
 	name = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
 	location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
 	date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
 	start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
 	end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
-	comments = StringField('other info: ', validators=[DataRequired(), Length(max=100)])
+	comments = StringField('other info: ', validators=[Length(max=100)])
 	submit = SubmitField('finish')
 	another = SubmitField('add another activity')
 	cancel = SubmitField('cancel')
+
+@login_manager.user_loader #gets id from session
+def load_user(id):
+	return Users.query.get(int(id))
+
+# class SearchForm(FlaskForm):
+#     holiday1 = SelectField('holiday name: ',
+#         choices=[])
+ 
+    #submit = SubmitField('Search')

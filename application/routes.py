@@ -7,6 +7,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 # current user checks if authenticated - authenticated, active, can get id
 # logout user removes the user session from being logged in
 # login required forces user to be logged in
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -62,10 +63,15 @@ def post():
 			)
 		db.session.add(postData)
 		db.session.commit()
+		
+		alltheposts=Posts().query.all()
 		return redirect(url_for('flights'))
+		return render_template('post.html', title='post', form=form, posts=alltheposts)
 	else:
 		print(form.errors)
-	return render_template('post.html', title='post', form=form)
+		return render_template('post.html', title='post', form=form)
+	
+
 
 @app.route('/logout')
 def logout():
@@ -104,7 +110,11 @@ def account():
 @app.route('/flights', methods=['GET','POST'])
 @login_required
 def flights():
-	form = FlightForm()
+	holidays = []
+	posts = Posts.query.filter_by(user_id=1)
+	for post in posts:
+		holidays.append(post.name)
+	form = FlightForm(request.form)
 	if form.validate_on_submit():
 		flightData = Flights(
 			date = form.date.data,
@@ -113,14 +123,23 @@ def flights():
 			arrive = form.arrive.data,
 			time_a = form.time_a.data,
 			time_a_l = form.time_a_l.data,
-			author = current_user
+			date1 = form.date1.data,
+			depart1 = form.depart1.data,
+			time_d1 = form.time_d1.data,
+			arrive1 = form.arrive1.data,
+			time_a1 = form.time_a1.data,
+			time_a_l1 = form.time_a_l1.data,
+			author = current_user,
+			holiday1 = form.holiday1.data
 		)
 		db.session.add(flightData)
 		db.session.commit()
 		return redirect(url_for('accommodation'))
+		return render_template('flights.html', title='flights', form=form, flights=flightData, holidays=holidays)
 	else:
 		print(form.errors)
-	return render_template('flights.html', title='flights', form=form)
+		print(form.holiday1.data)
+		return render_template('flights.html', title='flights', form=form, holidays=holidays)
 
 @app.route('/accommodation', methods=['GET','POST'])
 @login_required
@@ -140,16 +159,15 @@ def accommodation():
 		db.session.add(accommodationData)
 		db.session.commit()
 		return redirect(url_for('activities'))
+		return render_template('accommodation.html', title='accommodation', form=form, accommodation=accommodationData)
 	else:
 		print(form.errors)
-	return render_template('accommodation.html', title='accommodation', form=form)
+		return render_template('accommodation.html', title='accommodation', form=form)
 
 @app.route('/activities', methods=['GET','POST'])
 @login_required
 def activities():
 	form = ActivitiesForm()
-	if form.cancel.data:
-		return redirect(url_for('home'))
 	if form.validate_on_submit():
 		activitiesData = Activities(
 			name = form.name.data,
@@ -163,7 +181,29 @@ def activities():
 		db.session.add(activitiesData)
 		db.session.commit()
 		return redirect(url_for('home'))
-	
+		if form.another.data:
+			return redirect(url_for('activities'))
+	elif form.cancel.data:
+		return redirect(url_for('home'))
+		return render_template('activities.html', title='activities', form=form, activities=activitiesData)
 	else:
 		print(form.errors)
-	return render_template('activities.html', title='activities', form=form)
+		return render_template('activities.html', title='activities', form=form)
+
+
+@app.route('/trip')
+def trip():
+	postData = Posts.query.all()
+	flightData = Flights.query.all()
+	accommodationData = Accommodation.query.all()
+	activitiesData = Activities.query.all()
+	return render_template('trip.html', title='your trip', posts=postData, flights=flightData, activities=activitiesData)
+
+def holiday():
+	holidays = []
+	posts = Posts.query.filter_by(author=current_user)
+	for post in posts:
+		holidays.append(post)
+	return holidays
+
+#oliday123=holiday()
