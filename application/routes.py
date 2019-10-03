@@ -66,7 +66,7 @@ def post():
 		
 		alltheposts=Posts().query.all()
 		return redirect(url_for('flights'))
-		return render_template('post.html', title='post', form=form, posts=alltheposts)
+		#return render_template('post.html', title='post', form=form, posts=alltheposts)
 	else:
 		print(form.errors)
 		return render_template('post.html', title='post', form=form)
@@ -84,7 +84,6 @@ def account():
 	form = UpdateAccountForm()
 	if form.delete.data:
 		#user = User.query.filter(current_user)
-		print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		posts = Posts.query.filter_by(user_id=current_user.id).all()
 		for i in posts:
 			db.session.delete(i)
@@ -110,36 +109,76 @@ def account():
 @app.route('/flights', methods=['GET','POST'])
 @login_required
 def flights():
-	holidays = []
-	posts = Posts.query.filter_by(user_id=1)
-	for post in posts:
-		holidays.append(post.name)
-	form = FlightForm(request.form)
+
+	form = FlightForm()
+
 	if form.validate_on_submit():
 		flightData = Flights(
-			date = form.date.data,
-			depart = form.depart.data,
-			time_d = form.time_d.data,
-			arrive = form.arrive.data,
-			time_a = form.time_a.data,
-			time_a_l = form.time_a_l.data,
-			date1 = form.date1.data,
-			depart1 = form.depart1.data,
-			time_d1 = form.time_d1.data,
-			arrive1 = form.arrive1.data,
-			time_a1 = form.time_a1.data,
-			time_a_l1 = form.time_a_l1.data,
-			author = current_user,
-			holiday1 = form.holiday1.data
+			holiday1 = str(form.holiday1.data),
+			date1 = str(form.date1.data),
+			depart = str(form.depart.data),
+			time_d = str(form.time_d.data),
+			arrive = str(form.arrive.data),
+			time_a = str(form.time_a.data),
+			time_a_l = str(form.time_a_l.data),
+			date2 = str(form.date2.data),
+			depart1 = str(form.depart1.data),
+			time_d1 = str(form.time_d1.data),
+			arrive1 = str(form.arrive1.data),
+			time_a1 = str(form.time_a1.data),
+			time_a_l1 = str(form.time_a_l1.data),
+			author = current_user
 		)
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print(flightData)
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
+		print("---------------------")
 		db.session.add(flightData)
 		db.session.commit()
 		return redirect(url_for('accommodation'))
-		return render_template('flights.html', title='flights', form=form, flights=flightData, holidays=holidays)
 	else:
-		print(form.errors)
-		print(form.holiday1.data)
-		return render_template('flights.html', title='flights', form=form, holidays=holidays)
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+		print("FORM INVALID")
+	holidays = []
+	posts = Posts.query.filter_by(user_id=2)
+	for post in posts:
+		holidays.append(post.name)
+	return render_template('flights.html', title='flights', form=form, holidays=holidays)
 
 @app.route('/accommodation', methods=['GET','POST'])
 @login_required
@@ -180,9 +219,10 @@ def activities():
 		)
 		db.session.add(activitiesData)
 		db.session.commit()
-		return redirect(url_for('home'))
 		if form.another.data:
 			return redirect(url_for('activities'))
+		else:
+			return redirect(url_for('home'))
 	elif form.cancel.data:
 		return redirect(url_for('home'))
 		return render_template('activities.html', title='activities', form=form, activities=activitiesData)
@@ -191,13 +231,19 @@ def activities():
 		return render_template('activities.html', title='activities', form=form)
 
 
-@app.route('/trip')
+@app.route('/trip', methods=['GET','POST'])
 def trip():
 	postData = Posts.query.all()
 	flightData = Flights.query.all()
 	accommodationData = Accommodation.query.all()
 	activitiesData = Activities.query.all()
-	return render_template('trip.html', title='your trip', posts=postData, flights=flightData, activities=activitiesData)
+
+
+	return render_template('trip.html', title='your trip', posts=postData, flights=flightData, activities=activitiesData, accommodation=accommodationData)
+
+@app.route('/delete', methods=['GET','POST'])
+def delete():
+	return render_template('delete.html', title='delete a trip')
 
 def holiday():
 	holidays = []

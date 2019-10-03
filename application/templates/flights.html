@@ -3,39 +3,29 @@
 	
 <h1>flights page</h1>
 <p>enter the details of your outbound flight</p>
-	<!-- <form action="", method="post">
-	<select name=holiday1 method="GET" action="">
-		{% for option in holidays %}
-			<option value="{{option}}" SELECTED>{{option}}</option>
-		{% endfor %}
-	</select>
-
-	</form>
-	<br> -->
+<form action="", method="post">	
+	{{ form.hidden_tag() }}
 	<div class="form-group">
 		{{ form.holiday1.label }}
 		{{ form.holiday1 }}
 		{% if form.holiday1.errors %}
 			<div class="error">
 				{% for error in form.holiday1.errors %}
-				<span>{{ error }}</span>
+				<span style="color: red;">{{ error }}; </span>
 				{% endfor %}
 			</div>
 		{% endif %}
 		
 	</div>
 	<br>
-	<div class="form">
-		<form method="POST" action="">
-			{{ form.hidden_tag() }}
 		<div class="form-group">
 			<form action="/action_page.php">
 				date:
-				<input type="date" name="date">
-				{% if form.date.errors %}
+				<input type="date" name="date1">
+				{% if form.date1.errors %}
 				<div class="error">
-					{% for error in form.date.errors %}
-					<span>{{ error }}</span>
+					{% for error in form.date1.errors %}
+					 <span style="color: red;">{{ error }}</span>
 					{% endfor %}
 				</div>
 				{% endif %}
@@ -47,7 +37,7 @@
 			{% if form.depart.errors %}
 			<div class="error">
 				{% for error in form.depart.errors %}
-				<span>{{ error }}</span>
+				 <span style="color: red;">{{ error }}</span>
 				{% endfor %}
 			</div>
 			{% endif %}
@@ -65,7 +55,7 @@
 			{% if form.arrive.errors %}
 			<div class="error">
 				{% for error in form.arrive.errors %}
-					<span>{{ error }}</span>
+					 <span style="color: red;">{{ error }}</span>
 				{% endfor %}
 			</div>
 			{% endif %}
@@ -87,18 +77,13 @@
 
 
 		<p>enter the details of your inbound flight</p>
-		<div class="form">
-		<form method="POST" action="">
-			{{ form.hidden_tag() }}
 		<div class="form-group">
-			<form action="/action_page.php">
 				date:
-				<input type="date" name="date1">
-				<!-- not closing form and idk why -->
-				{% if form.date1.errors %}
+				<input type="date" name="date2">
+				{% if form.date2.errors %}
 				<div class="error">
-					{% for error in form.date1.errors %}
-					<span>{{ error }}</span>
+					{% for error in form.date2.errors %}
+					 <span style="color: red;">{{ error }}</span>
 					{% endfor %}
 				</div>
 				{% endif %}
@@ -110,7 +95,7 @@
 			{% if form.depart1.errors %}
 			<div class="error">
 				{% for error in form.depart1.errors %}
-				<span>{{ error }}</span>
+				 <span style="color: red;">{{ error }}</span>
 				{% endfor %}
 			</div>
 			{% endif %}
@@ -128,7 +113,7 @@
 			{% if form.arrive1.errors %}
 			<div class="error">
 				{% for error in form.arrive1.errors %}
-					<span>{{ error }}</span>
+					 <span style="color: red;">{{ error }}</span>
 				{% endfor %}
 			</div>
 			{% endif %}

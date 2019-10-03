@@ -1,46 +1,55 @@
 {% extends "layout.html" %}
 {% block body_content %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 	<h1>your trip</h1>
 	<!-- <p>here are the details for your trip</p> -->
 	{% for post in posts %}
 	<h3>{{ post.name }}</h3>
 	{% endfor %}
-
-	<p>you are leaving on</p>
+	<br>
 	{% for flight in flights %}
 		<div>
-			<span>{{ flight.date }}</span>
+			<h4>you are leaving on {{ flight.date1 }}</h4>
 			<p>you will be departing from {{ flight.depart }} at {{ flight.time_d }}</p>
 			<p>you will be arriving at {{ flight.arrive }} at {{ flight.time_a }}, which is {{ flight.time_a_l }} in local time.</p>
 		</div>
 	{% endfor %}
-
-	<p>you will be staying at</p>
+	<br>
 	{% for accommodation in accommodation %}
 		<div>
-			<span>{{ accommodation.name }}, which can be found at {{ accommodation.address }}</span>
+			<h4>you will be staying at {{ accommodation.name }}, which can be found at {{ accommodation.address }}</h4>
 			<p>you will be checking in at {{ accommodation.in_time }} on {{ accommodation.arr_date }}</p>
-			<p>you will be checking out at {{ accommodation.out_time }} on {{ accommodation.out_date }}</p>
 			<p>other comments: {{ accommodation.comments }}
 		</div>
 	{% endfor %}
-
-	<p>your planned activities are:</p>
+	<br>
+	<h4>your planned activities are:</h4>
 	{% for activity in activities %}
 		<div>
-			<p>{{ activities.name }} at {{ activities.location }} on {{ activities.time }}</p>
-			<p>time: {{ activities.start }} - {{ activities.end }}</p>
-			<p>other info: {{ activities.comments }}</p>
+			<p>{{ activity.name }} at {{ activity.location }} on {{ activity.date }}</p>
+			<p>time: {{ activity.start }} - {{ activity.end }}</p>
+			<p>other info: {{ activity.comments }}</p>
 		</div>
 	{% endfor %}
-
-	<p>you are returning on</p>
+	<br>
+	{% for accommodation in accommodation %}
+		<div>
+			<h4>you will be checking out of {{ accommodation.name }} on {{ accommodation.out_date }} at {{ accommodation.out_time }}</h4>
+	{% endfor %}
+	
 	{% for flight in flights %}
 		<div>
-			<span>{{ flight.date1 }}</span>
+			<h4>you are returning on {{ flight.date2 }}</h4>
 			<p>you will be departing from {{ flight.depart1 }} at {{ flight.time_d1 }}</p>
 			<p>you will be arriving at {{ flight.arrive1 }} at {{ flight.time_a1 }}, which is {{ flight.time_a_l1 }} in local time.</p>
 		</div>
 	{% endfor %}
+<div class="w3-container">
+<a href="{{ url_for('flights') }}" class="w3-button w3-round-large w3-dark-grey">add flights</a>
+<a href="{{ url_for('accommodation') }}" class="w3-button w3-round-large w3-dark-grey">add accommodation</a>
+<a href="{{ url_for('activities') }}" class="w3-button w3-round-large w3-dark-grey">add activity</a>
+<a href="{{ url_for('delete') }}" class="w3-button w3-round-large w3-dark-grey">delete a trip</a>
+</div>
 
 {% endblock body_content %}
