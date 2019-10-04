@@ -2,8 +2,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, BooleanField, DateField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from application.models import Users, Posts
-from application import bcrypt, login_manager
+from application import bcrypt, login_manager, app
 from flask_login import current_user
+
+
+# @app.context_processor
+# def login_fix():
+# 	import flask_login
+# 	return dict(current_user=flask_login._get_user() or current_app.login_manager.anonymous_user())
 
 @login_manager.user_loader #gets id from session
 def load_user(id):
@@ -62,8 +68,8 @@ class UpdateAccountForm(FlaskForm):
 		# else:
 		# 	raise ValidationError('this is already your email address')
 
-	def delete_account(self):
-		current_user.delete()
+	# def delete_account(self):
+	# 	current_user.delete()
 
 class FlightForm(FlaskForm):
 	#holiday1 = SelectField('name of holiday: ', coerce=int)
@@ -71,12 +77,13 @@ class FlightForm(FlaskForm):
 	#print(str(Users.id))
 	
 	cycle = []
-	lists = Posts.query.all()
+	lists = Posts.query.filter_by(user_id=1).all()
 	for i in range(int(len(lists))):
 		item = lists[i].name
 		temp = [item, item]
 		cycle.append(temp)
-	print(current_user)
+
+	print("current user!!!!!!!!!!!!!!!!!!!!!!!!!", current_user)
 	holiday1 = SelectField('Your Trip: ', choices=cycle)
 	#holiday1 = SelectField('Your Trip: ', choices=temp, coerce=int)
 	date1 = StringField('date of flight: ', validators=[DataRequired()])

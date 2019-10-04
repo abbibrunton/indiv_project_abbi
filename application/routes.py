@@ -85,12 +85,21 @@ def account():
 	if form.delete.data:
 		#user = User.query.filter(current_user)
 		posts = Posts.query.filter_by(user_id=current_user.id).all()
+		flights = Flights.query.filter_by(user_id=current_user.id).all()
+		accommodation = Accommodation.query.filter_by(user_id=current_user.id).all()
+		activities = Activities.query.filter_by(user_id=current_user.id).all()
 		for i in posts:
+			db.session.delete(i)
+		for i in flights:
+			db.session.delete(i)
+		for i in accommodation:
+			db.session.delete(i)
+		for i in activities:
 			db.session.delete(i)
 		db.session.delete(current_user)
 		db.session.commit()
 		logout_user()
-		return redirect(url_for('login'))
+		return redirect(url_for('register'))
 	if form.validate_on_submit():
 		current_user.first_name = form.first_name.data
 		current_user.last_name = form.last_name.data
@@ -106,10 +115,20 @@ def account():
 
 	return render_template('account.html', title='Account', form=form)
 
+# def holiday():
+# 	holidays = []
+# 	posts = Posts.query.filter_by(user_id=current_user.id)
+# 	for post in posts:
+# 		holidays.append(post.name)
+
 @app.route('/flights', methods=['GET','POST'])
 @login_required
 def flights():
-
+	holidays = []
+	posts = Posts.query.filter_by(user_id=current_user.id).all()
+	for post in posts:
+		holidays.append(post.name)
+	
 	form = FlightForm()
 
 	if form.validate_on_submit():
@@ -129,56 +148,11 @@ def flights():
 			time_a_l1 = str(form.time_a_l1.data),
 			author = current_user
 		)
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print(flightData)
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
-		print("---------------------")
 		db.session.add(flightData)
 		db.session.commit()
 		return redirect(url_for('accommodation'))
 	else:
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-		print("FORM INVALID")
-	holidays = []
-	posts = Posts.query.filter_by(user_id=2)
-	for post in posts:
-		holidays.append(post.name)
-	return render_template('flights.html', title='flights', form=form, holidays=holidays)
+		return render_template('flights.html', title='flights', form=form, holidays=holidays)
 
 @app.route('/accommodation', methods=['GET','POST'])
 @login_required
@@ -198,7 +172,6 @@ def accommodation():
 		db.session.add(accommodationData)
 		db.session.commit()
 		return redirect(url_for('activities'))
-		return render_template('accommodation.html', title='accommodation', form=form, accommodation=accommodationData)
 	else:
 		print(form.errors)
 		return render_template('accommodation.html', title='accommodation', form=form)
@@ -251,5 +224,7 @@ def holiday():
 	for post in posts:
 		holidays.append(post)
 	return holidays
+
+
 
 #oliday123=holiday()

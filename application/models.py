@@ -5,6 +5,8 @@ from flask_login import UserMixin #is_authenticated, is_active, is_anonymous, ge
 def load_user(id):
 	return Users.query.get(int(id))
 
+
+
 class Users(db.Model, UserMixin):
 	id = db.Column(db.Integer, primary_key=True)
 	first_name = db.Column(db.String(30), nullable=False)

@@ -19,7 +19,6 @@
 	</div>
 	<br>
 		<div class="form-group">
-			<form action="/action_page.php">
 				date:
 				<input type="date" name="date1">
 				{% if form.date1.errors %}
@@ -44,7 +43,6 @@
 		</div>
 		<br>
 		<div class="form-group">
-			<form action="/action_page.php">
 				time:
 				<input type="time" name="time_d">
 		</div>
@@ -62,14 +60,12 @@
 		</div>
 		<br>
 		<div class="form-group">
-			<form action="/action_page.php">
 				time of arrival:
 				<input type="time" name="time_a">
 		</div>
 		<br>
 		<div class="form-group">
 			<div class="form-group">
-			<form action="/action_page.php">
 				time of arrival (local):
 				<input type="time" name="time_a_l">
 		</div>
@@ -102,7 +98,6 @@
 		</div>
 		<br>
 		<div class="form-group">
-			<form action="/action_page.php">
 				time:
 				<input type="time" name="time_d1">
 		</div>
@@ -120,19 +115,18 @@
 		</div>
 		<br>
 		<div class="form-group">
-			<form action="/action_page.php">
 				time of arrival:
 				<input type="time" name="time_a1">
 		</div>
 		<br>
 		<div class="form-group">
 			<div class="form-group">
-			<form action="/action_page.php">
 				time of arrival (local):
 				<input type="time" name="time_a_l1">
 		</div>
 		<br>
 		{{ form.submit }}
+		<a href="{{ url_for('home') }}"><input type="button" value="cancel"></a>
 	</form>
 </div>
 
