@@ -113,7 +113,14 @@ class FlightForm(FlaskForm):
 		
 
 class AccommodationForm(FlaskForm):
-	#holiday1 = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
+	cycle = []
+	lists = Posts.query.filter_by(user_id=1).all()
+	for i in range(int(len(lists))):
+		item = lists[i].name
+		temp = [item, item]
+		cycle.append(temp)
+
+	holiday1 = SelectField('Your Trip: ', choices=cycle)
 	name = StringField('name of accommodation: ', validators=[DataRequired(), Length(min=4, max=100)])
 	address = StringField('address: ', validators=[DataRequired(), Length(min=4, max=100)])
 	arr_date = StringField('arrival date: ', validators=[DataRequired(),Length(max=10)])
@@ -124,7 +131,14 @@ class AccommodationForm(FlaskForm):
 	submit = SubmitField('next')
 
 class ActivitiesForm(FlaskForm):
-	#holiday1 = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
+	cycle = []
+	lists = Posts.query.filter_by(user_id=1).all()
+	for i in range(int(len(lists))):
+		item = lists[i].name
+		temp = [item, item]
+		cycle.append(temp)
+
+	holiday1 = SelectField('Your Trip: ', choices=cycle)
 	name = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
 	location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
 	date = StringField('date: ', validators=[DataRequired(),Length(max=10)])

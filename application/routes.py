@@ -160,6 +160,7 @@ def accommodation():
 	form = AccommodationForm()
 	if form.validate_on_submit():
 		accommodationData = Accommodation(
+			holiday1 = str(form.holiday1.data),
 			name = form.name.data,
 			address = form.address.data,
 			arr_date = form.arr_date.data,
@@ -182,6 +183,7 @@ def activities():
 	form = ActivitiesForm()
 	if form.validate_on_submit():
 		activitiesData = Activities(
+			holiday1 = str(form.holiday1.data),
 			name = form.name.data,
 			location = form.location.data,
 			date = form.date.data,

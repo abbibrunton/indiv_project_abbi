@@ -49,6 +49,7 @@ class Flights(db.Model):
 
 class Accommodation(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	holiday1 = db.Column(db.Integer, nullable=False)
 	name = db.Column(db.String(50), nullable=False)
 	address = db.Column(db.String(50), nullable=False)
 	arr_date = db.Column(db.String(50), nullable=False)
@@ -62,6 +63,7 @@ class Accommodation(db.Model):
 
 class Activities(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
+	holiday1 = db.Column(db.Integer, nullable=False)
 	name = db.Column(db.String(50), nullable=False)
 	location = db.Column(db.String(50), nullable=False)
 	date = db.Column(db.String(50), nullable=False)
