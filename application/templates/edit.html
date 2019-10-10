@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<h1> choose a trip to edit/delete!</h1>
+<br>
+{% for post in posts %}
+	<h3>{{ post.name }}</h3>
+	<a href="{{ url_for('edittrip',trip_id=loop.index) }}"><input type="button" value="edit"></a>
+		{% for flight in flights %}
+			{% if flight.holiday1 == post.name %}
+			<p>destination: {{ flight.arrive }}. departure date: {{ flight.date1 }}. return date: {{ flight.date2 }}
+			{% endif %}
+		{% endfor %}
+
+{% endfor %}	
+{% endblock body_content %}

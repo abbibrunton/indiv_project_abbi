@@ -102,7 +102,7 @@ class FlightForm(FlaskForm):
 
 class AccommodationForm(FlaskForm):
 	cycle = []
-	holiday1 = SelectField('Your Trip: ', choices=cycle, coerce=str)
+	holiday1 = SelectField('Your Trip: ', choices=cycle)
 	name = StringField('name of accommodation: ', validators=[DataRequired(), Length(min=4, max=100)])
 	address = StringField('address: ', validators=[DataRequired(), Length(min=4, max=100)])
 	arr_date = StringField('arrival date: ', validators=[DataRequired(),Length(max=10)])
@@ -126,8 +126,7 @@ class ActivitiesForm(FlaskForm):
 	cancel = SubmitField('cancel')
 
 
-# class SearchForm(FlaskForm):
-#     holiday1 = SelectField('holiday name: ',
-#         choices=[])
+#class EditForm(FlaskForm):
+	
  
-    #submit = SubmitField('Search')
+    

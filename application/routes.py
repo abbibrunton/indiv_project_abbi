@@ -223,7 +223,7 @@ def activities():
 
 @app.route('/trip', methods=['GET','POST'])
 def trip():
-	postData = Posts.query.all()
+	postData = Posts.query.filter_by(user_id=current_user.id).all()
 	flightData = Flights.query.all()
 	accommodationData = Accommodation.query.all()
 	activitiesData = Activities.query.all()
@@ -231,17 +231,16 @@ def trip():
 
 	return render_template('trip.html', title='your trip', posts=postData, flights=flightData, activities=activitiesData, accommodation=accommodationData)
 
-@app.route('/delete', methods=['GET','POST'])
-def delete():
-	return render_template('delete.html', title='delete a trip')
+@app.route('/edit', methods=['GET','POST'])
+def edit():
+	flightData = Flights.query.all()
+	posts=Posts.query.filter_by(user_id=current_user.id).all()
+	return render_template('edit.html', title='edit', posts=posts, flights=flightData)
 
-def holiday():
-	holidays = []
-	posts = Posts.query.filter_by(author=current_user)
-	for post in posts:
-		holidays.append(post)
-	return holidays
+@app.route('/edittrip/<int(min=1):trip_id>', methods=['GET','POST'])
+def edittrip(trip_id):
+	#delete(trip_id)
+	posts=Posts.query.filter_by(id=trip_id).first()
+	flights=Flights.query.filter_by(holiday1=posts.name).first()
+	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights)
 
-
-
-#oliday123=holiday()
