@@ -8,6 +8,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 # logout user removes the user session from being logged in
 # login required forces user to be logged in
 
+cycle = []
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -63,8 +65,7 @@ def post():
 			)
 		db.session.add(postData)
 		db.session.commit()
-		
-		alltheposts=Posts().query.all()
+
 		return redirect(url_for('flights'))
 		#return render_template('post.html', title='post', form=form, posts=alltheposts)
 	else:
@@ -115,22 +116,19 @@ def account():
 
 	return render_template('account.html', title='Account', form=form)
 
-# def holiday():
-# 	holidays = []
-# 	posts = Posts.query.filter_by(user_id=current_user.id)
-# 	for post in posts:
-# 		holidays.append(post.name)
-
 @app.route('/flights', methods=['GET','POST'])
 @login_required
 def flights():
-	holidays = []
-	posts = Posts.query.filter_by(user_id=current_user.id).all()
-	for post in posts:
-		holidays.append(post.name)
-	
 	form = FlightForm()
-
+	cycle = []
+	for field in form:
+		if field.type == 'SelectField':
+			field.choices = cycle
+	for post in Posts.query.all():
+		if post.user_id == current_user.id:
+			cycle.append((post.name, post.name))
+	form.holiday1.choices = cycle
+	
 	if form.validate_on_submit():
 		flightData = Flights(
 			holiday1 = str(form.holiday1.data),
@@ -152,12 +150,21 @@ def flights():
 		db.session.commit()
 		return redirect(url_for('accommodation'))
 	else:
-		return render_template('flights.html', title='flights', form=form, holidays=holidays)
+		return render_template('flights.html', title='flights', form=form)
 
 @app.route('/accommodation', methods=['GET','POST'])
 @login_required
 def accommodation():
 	form = AccommodationForm()
+	cycle = []
+	for field in form:
+		if field.type == 'SelectField':
+			field.choices = cycle
+	for post in Posts.query.all():
+		if post.user_id == current_user.id:
+			cycle.append((post.name, post.name))
+	form.holiday1.choices = cycle
+
 	if form.validate_on_submit():
 		accommodationData = Accommodation(
 			holiday1 = str(form.holiday1.data),
@@ -181,6 +188,15 @@ def accommodation():
 @login_required
 def activities():
 	form = ActivitiesForm()
+	cycle = []
+	for field in form:
+		if field.type == 'SelectField':
+			field.choices = cycle
+	for post in Posts.query.all():
+		if post.user_id == current_user.id:
+			cycle.append((post.name, post.name))
+	form.holiday1.choices = cycle
+
 	if form.validate_on_submit():
 		activitiesData = Activities(
 			holiday1 = str(form.holiday1.data),
@@ -200,7 +216,6 @@ def activities():
 			return redirect(url_for('home'))
 	elif form.cancel.data:
 		return redirect(url_for('home'))
-		return render_template('activities.html', title='activities', form=form, activities=activitiesData)
 	else:
 		print(form.errors)
 		return render_template('activities.html', title='activities', form=form)

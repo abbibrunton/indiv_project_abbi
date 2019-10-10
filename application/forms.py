@@ -5,7 +5,6 @@ from application.models import Users, Posts
 from application import bcrypt, login_manager, app
 from flask_login import current_user
 
-
 # @app.context_processor
 # def login_fix():
 # 	import flask_login
@@ -54,11 +53,11 @@ class LoginForm(FlaskForm):
 				raise ValidationError('password not recognised')
 
 class UpdateAccountForm(FlaskForm):
-	first_name = StringField('first name', validators=[DataRequired(), Length(min=2, max=30)])
-	last_name = StringField('last name', validators=[DataRequired(), Length(min=2, max=30)])
-	email = StringField('email', validators=[DataRequired(), Email()])
-	submit = SubmitField('confirm')
-	delete = SubmitField('delete account')
+	first_name = StringField('first name: ', validators=[DataRequired(), Length(min=2, max=30)])
+	last_name = StringField('last name: ', validators=[DataRequired(), Length(min=2, max=30)])
+	email = StringField('email: ', validators=[DataRequired(), Email()])
+	submit = SubmitField('confirm: ')
+	delete = SubmitField('delete account: ')
 
 	def validate_email(self, email):
 		if email.data != current_user.email:
@@ -72,20 +71,9 @@ class UpdateAccountForm(FlaskForm):
 	# 	current_user.delete()
 
 class FlightForm(FlaskForm):
-	#holiday1 = SelectField('name of holiday: ', coerce=int)
-	#holiday = StringField('name of holiday: ', validators=[DataRequired(), Length(min=4, max=100)])
-	#print(str(Users.id))
 	
 	cycle = []
-	lists = Posts.query.filter_by(user_id=1).all()
-	for i in range(int(len(lists))):
-		item = lists[i].name
-		temp = [item, item]
-		cycle.append(temp)
-
-	print("current user!!!!!!!!!!!!!!!!!!!!!!!!!", current_user)
 	holiday1 = SelectField('Your Trip: ', choices=cycle)
-	#holiday1 = SelectField('Your Trip: ', choices=temp, coerce=int)
 	date1 = StringField('date of flight: ', validators=[DataRequired()])
 	depart = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
 	time_d = StringField('time of departure: ', validators=[DataRequired()])
@@ -114,13 +102,7 @@ class FlightForm(FlaskForm):
 
 class AccommodationForm(FlaskForm):
 	cycle = []
-	lists = Posts.query.filter_by(user_id=1).all()
-	for i in range(int(len(lists))):
-		item = lists[i].name
-		temp = [item, item]
-		cycle.append(temp)
-
-	holiday1 = SelectField('Your Trip: ', choices=cycle)
+	holiday1 = SelectField('Your Trip: ', choices=cycle, coerce=str)
 	name = StringField('name of accommodation: ', validators=[DataRequired(), Length(min=4, max=100)])
 	address = StringField('address: ', validators=[DataRequired(), Length(min=4, max=100)])
 	arr_date = StringField('arrival date: ', validators=[DataRequired(),Length(max=10)])
@@ -132,12 +114,6 @@ class AccommodationForm(FlaskForm):
 
 class ActivitiesForm(FlaskForm):
 	cycle = []
-	lists = Posts.query.filter_by(user_id=1).all()
-	for i in range(int(len(lists))):
-		item = lists[i].name
-		temp = [item, item]
-		cycle.append(temp)
-
 	holiday1 = SelectField('Your Trip: ', choices=cycle)
 	name = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
 	location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
