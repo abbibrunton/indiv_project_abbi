@@ -3,5 +3,233 @@
 
 	<h1>{{ title }}</h1>
 	{{ posts.name }}
-	
+<p>enter the details of your outbound flight</p>
+<form action="", method="post">	
+	{{ form.hidden_tag() }}
+		<div class="form-group">
+				date:
+				<input type="date" name="date1">
+				{% if form.date1.errors %}
+				<div class="error">
+					{% for error in form.date1.errors %}
+					 <span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.depart.label }}
+			{{ form.depart }}
+			{% if form.depart.errors %}
+			<div class="error">
+				{% for error in form.depart.errors %}
+				 <span style="color: red;">{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+				time:
+				<input type="time" name="time_d">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.arrive.label }}
+			{{ form.arrive }}
+			{% if form.arrive.errors %}
+			<div class="error">
+				{% for error in form.arrive.errors %}
+					 <span style="color: red;">{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+				time of arrival:
+				<input type="time" name="time_a">
+		</div>
+		<br>
+		<div class="form-group">
+			<div class="form-group">
+				time of arrival (local):
+				<input type="time" name="time_a_l">
+		</div>
+		<br>
+
+
+		<p>enter the details of your inbound flight</p>
+		<div class="form-group">
+				date:
+				<input type="date" name="date2">
+				{% if form.date2.errors %}
+				<div class="error">
+					{% for error in form.date2.errors %}
+					 <span style="color: red;">{{ error }}</span>
+					{% endfor %}
+				</div>
+				{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.depart1.label }}
+			{{ form.depart1 }}
+			{% if form.depart1.errors %}
+			<div class="error">
+				{% for error in form.depart1.errors %}
+				 <span style="color: red;">{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+				time:
+				<input type="time" name="time_d1">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.arrive1.label }}
+			{{ form.arrive1 }}
+			{% if form.arrive1.errors %}
+			<div class="error">
+				{% for error in form.arrive1.errors %}
+					 <span style="color: red;">{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+				time of arrival:
+				<input type="time" name="time_a1">
+		</div>
+		<br>
+		<div class="form-group">
+			<div class="form-group">
+				time of arrival (local):
+				<input type="time" name="time_a_l1">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.name.label }}
+			{{ form.name }}
+			{% if form.name.errors %}
+			<div class="error">
+					{% for error in form.name.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.address.label }}
+			{{ form.address }}
+			{% if form.address.errors %}
+			<div class="error">
+				{% for error in form.address.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date of check-in :
+				<input type="date" name="arr_date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time of check-in:
+				<input type="time" name="in_time">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date of check-out :
+				<input type="date" name="out_date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				time of check-out:
+				<input type="time" name="out_time">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.comments.label }}
+			{{ form.comments }}
+			{% if form.comments.errors %}
+			<div class="error">
+					{% for error in form.comments.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.name1.label }}
+			{{ form.name1 }}
+			{% if form.name1.errors %}
+			<div class="error">
+					{% for error in form.name1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.location.label }}
+			{{ form.location }}
+			{% if form.location.errors %}
+			<div class="error">
+				{% for error in form.location.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				start time:
+				<input type="time" name="start">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				end time:
+				<input type="time" name="end">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.comments1.label }}
+			{{ form.comments1 }}
+			{% if form.comments1.errors %}
+			<div class="error">
+					{% for error in form.comments1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		<br>
+		{{ form.submit }}
+		</div>
+</form>
+
+
+
 {% endblock body_content %}

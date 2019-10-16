@@ -126,7 +126,33 @@ class ActivitiesForm(FlaskForm):
 	cancel = SubmitField('cancel')
 
 
-#class EditForm(FlaskForm):
+class EditForm(FlaskForm):
+	date1 = StringField('date of flight: ', validators=[DataRequired()])
+	depart = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_d = StringField('time of departure: ', validators=[DataRequired()])
+	arrive = StringField('arrival airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_a = StringField('time of arrival: ', validators=[DataRequired()])
+	time_a_l = StringField('time of arrival (local): ', validators=[DataRequired()])
+	date2 = StringField('date of flight: ', validators=[DataRequired()])
+	depart1 = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_d1 = StringField('time of departure: ', validators=[DataRequired()])
+	arrive1 = StringField('arrival airport: ', validators=[DataRequired(), Length(min=4, max=100)])
+	time_a1 = StringField('time of arrival: ', validators=[DataRequired()])
+	time_a_l1 = StringField('time of arrival (local): ', validators=[DataRequired()])
 	
+	name = StringField('name of accommodation: ', validators=[DataRequired(), Length(min=4, max=100)])
+	address = StringField('address: ', validators=[DataRequired(), Length(min=4, max=100)])
+	arr_date = StringField('arrival date: ', validators=[DataRequired(),Length(max=10)])
+	in_time = StringField('check-in time: ', validators=[DataRequired(), Length(max=10)])
+	out_date = StringField('leaving date: ', validators=[DataRequired(),Length(max=10)])
+	out_time = StringField('check-out time: ', validators=[DataRequired(),Length(max=10)])
+	comments = StringField('other info: ', validators=[Length(max=100)])
  
-    
+	name1 = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
+	location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
+	date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
+	start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
+	end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
+	comments1 = StringField('other info: ', validators=[Length(max=100)])
+
+	submit = SubmitField('submit')    

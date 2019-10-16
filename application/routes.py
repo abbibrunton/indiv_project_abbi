@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, request
 from application import app, db, bcrypt
 from application.models import Posts, Users, Flights, Accommodation, Activities
-from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm, FlightForm, AccommodationForm, ActivitiesForm
+from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm, FlightForm, AccommodationForm, ActivitiesForm, EditForm
 from flask_login import login_user, current_user, logout_user, login_required
 # login user makes and maintains a session for the logged in user
 # current user checks if authenticated - authenticated, active, can get id
@@ -239,8 +239,86 @@ def edit():
 
 @app.route('/edittrip/<int(min=1):trip_id>', methods=['GET','POST'])
 def edittrip(trip_id):
-	#delete(trip_id)
+	form = EditForm()
 	posts=Posts.query.filter_by(id=trip_id).first()
 	flights=Flights.query.filter_by(holiday1=posts.name).first()
-	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights)
+	accommodation=Accommodation.query.filter_by(holiday1=posts.name).first()
+	activities=Activities.query.filter_by(holiday1=posts.name).first()
+	if form.is_submitted():
+		if form.date1.data:
+			flights.date1 = form.date1.data
+		flights.depart = form.depart.data
+		if form.time_d.data:
+			flights.time_d = form.time_d.data
+		flights.arrive = form.arrive.data
+		if form.time_a.data:
+			flights.time_a = form.time_a.data
+		if form.time_a_l.data:
+			flights.time_a_l = form.time_a_l.data
+		if form.date2.data:
+			flights.date2 = form.date2.data
+		flights.depart1 = form.depart1.data
+		if form.time_d1.data:
+			flights.time_d1 = form.time_d1.data
+		flights.arrive1 = form.arrive1.data
+		if form.time_a1.data:
+			flights.time_a1 = form.time_a1.data
+		if form.time_a_l1.data:
+			flights.time_a_l1 = form.time_a_l1.data
+
+		accommodation.name = form.name.data
+		accommodation.address = form.address.data
+		if form.arr_date.data:
+			accommodation.arr_date = form.arr_date.data
+		if form.in_time.data:
+			accommodation.in_time = form.in_time.data
+		if form.out_date.data:
+			accommodation.out_date = form.out_date.data
+		if form.out_time.data:
+			accommodation.out_time = form.out_time.data
+		accommodation.comments = form.comments.data
+
+		activities.name = form.name1.data
+		activities.location = form.location.data
+		if form.date.data:
+			activities.date = form.date.data
+		if form.start.data:
+			activities.start = form.start.data
+		if form.end.data:
+			activities.end = form.end.data
+		activities.comments = form.comments1.data
+
+		db.session.commit()
+		return redirect(url_for('edit'))
+
+	elif request.method == 'GET':
+		form.date1.data = flights.date1
+		form.depart.data = flights.depart
+		form.time_d.data = flights.time_d
+		form.arrive.data = flights.arrive
+		form.time_a.data = flights.time_a
+		form.time_a_l.data = flights.time_a_l
+		form.date2.data = flights.date2
+		form.depart1.data = flights.depart1
+		form.time_d1.data = flights.time_d1
+		form.arrive1.data = flights.arrive1
+		form.time_a1.data = flights.time_a1
+		form.time_a_l1.data = flights.time_a_l1
+
+		form.name.data = accommodation.name
+		form.address.data = accommodation.address
+		form.arr_date.data = accommodation.arr_date
+		form.in_time.data = accommodation.in_time
+		form.out_date.data = accommodation.out_date
+		form.out_time.data = accommodation.out_time
+		form.comments.data = accommodation.comments
+
+		form.name1.data = activities.name
+		form.location.data = activities.location
+		form.date.data = activities.date
+		form.start.data = activities.start
+		form.end.data = activities.end
+		form.comments1.data = activities.comments
+
+	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights, accommodation=accommodation, activities=activities, form=form)
 
