@@ -88,11 +88,6 @@ class FlightForm(FlaskForm):
 	time_a_l1 = StringField('time of arrival (local): ', validators=[DataRequired()])
 
 	submit = SubmitField('next')
-	
-	def validate_holiday1(self, holiday1):
-		holiday = Posts.query.filter_by(name=holiday1.data).first()
-		if not holiday:
-			raise  ValidationError(holiday1.data)
 
 	# def add_choices(request):
 	# 	posts = Posts.query.filter_by(author=current_user)
@@ -125,7 +120,6 @@ class ActivitiesForm(FlaskForm):
 	another = SubmitField('add another activity')
 	cancel = SubmitField('cancel')
 
-
 class EditForm(FlaskForm):
 	date1 = StringField('date of flight: ', validators=[DataRequired()])
 	depart = StringField('departure airport: ', validators=[DataRequired(), Length(min=4, max=100)])
@@ -147,12 +141,30 @@ class EditForm(FlaskForm):
 	out_date = StringField('leaving date: ', validators=[DataRequired(),Length(max=10)])
 	out_time = StringField('check-out time: ', validators=[DataRequired(),Length(max=10)])
 	comments = StringField('other info: ', validators=[Length(max=100)])
- 
-	name1 = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
-	location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
-	date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
-	start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
-	end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
-	comments1 = StringField('other info: ', validators=[Length(max=100)])
 
-	submit = SubmitField('submit')    
+	a1_name1 = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a1_location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a1_date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
+	a1_start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
+	a1_end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
+	a1_comments1 = StringField('other info: ', validators=[Length(max=100)])
+	delete_a1 = SubmitField('delete activity 1')
+
+	a2_name1 = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a2_location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a2_date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
+	a2_start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
+	a2_end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
+	a2_comments1 = StringField('other info: ', validators=[Length(max=100)])
+	delete_a2 = SubmitField('delete activity 2')
+
+	a3_name1 = StringField('name of activity: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a3_location = StringField('location: ', validators=[DataRequired(), Length(min=4, max=100)])
+	a3_date = StringField('date: ', validators=[DataRequired(),Length(max=10)])
+	a3_start = StringField('start time: ', validators=[DataRequired(), Length(max=10)])
+	a3_end = StringField('end time: ', validators=[DataRequired(),Length(max=10)])
+	a3_comments1 = StringField('other info: ', validators=[Length(max=100)])
+	delete_a3 = SubmitField('delete activity 3')
+
+	submit = SubmitField('submit')
+	delete = SubmitField('delete trip')    

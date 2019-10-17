@@ -243,7 +243,14 @@ def edittrip(trip_id):
 	posts=Posts.query.filter_by(id=trip_id).first()
 	flights=Flights.query.filter_by(holiday1=posts.name).first()
 	accommodation=Accommodation.query.filter_by(holiday1=posts.name).first()
-	activities=Activities.query.filter_by(holiday1=posts.name).first()
+	activity=Activities.query.filter_by(holiday1=posts.name).all()
+	activity_count=int(len(activity))
+	if form.delete.data:
+		db.session.delete(posts)
+		db.session.delete(flights)
+		db.session.delete(accommodation)
+		for i in activity:
+			db.session.delete(i)
 	if form.is_submitted():
 		if form.date1.data:
 			flights.date1 = form.date1.data
@@ -277,16 +284,41 @@ def edittrip(trip_id):
 		if form.out_time.data:
 			accommodation.out_time = form.out_time.data
 		accommodation.comments = form.comments.data
-
-		activities.name = form.name1.data
-		activities.location = form.location.data
-		if form.date.data:
-			activities.date = form.date.data
-		if form.start.data:
-			activities.start = form.start.data
-		if form.end.data:
-			activities.end = form.end.data
-		activities.comments = form.comments1.data
+		i=1
+		for j in activity:
+			activity_id = j.id
+			activities1=Activities.query.filter_by(id=activity_id).first()
+			if i == 1:
+				activities1.name = form.a1_name1.data
+				activities1.location = form.a1_location.data
+				if form.a1_date.data:
+					activities1.date = form.a1_date.data
+				if form.a1_start.data:
+					activities1.start = form.a1_start.data
+				if form.a1_end.data:
+					activities1.end = form.a1_end.data
+				activities1.comments = form.a1_comments1.data
+			elif i == 2:
+				activities1.name = form.a2_name1.data
+				activities1.location = form.a2_location.data
+				if form.a2_date.data:
+					activities1.date = form.a2_date.data
+				if form.a2_start.data:
+					activities1.start = form.a2_start.data
+				if form.a2_end.data:
+					activities1.end = form.a2_end.data
+				activities1.comments = form.a2_comments1.data
+			elif i == 3:
+				activities1.name = form.a3_name1.data
+				activities1.location = form.a3_location.data
+				if form.a3_date.data:
+					activities1.date = form.a3_date.data
+				if form.a3_start.data:
+					activities1.start = form.a3_start.data
+				if form.a3_end.data:
+					activities1.end = form.a3_end.data
+				activities1.comments = form.a3_comments1.data
+			i+=1
 
 		db.session.commit()
 		return redirect(url_for('edit'))
@@ -313,12 +345,32 @@ def edittrip(trip_id):
 		form.out_time.data = accommodation.out_time
 		form.comments.data = accommodation.comments
 
-		form.name1.data = activities.name
-		form.location.data = activities.location
-		form.date.data = activities.date
-		form.start.data = activities.start
-		form.end.data = activities.end
-		form.comments1.data = activities.comments
+		i=1
+		for j in activity:
+			activity_id = j.id
+			activities1=Activities.query.filter_by(id=activity_id).first()
+			if i == 1:
+				form.a1_name1.data = activities1.name
+				form.a1_location.data = activities1.location
+				form.a1_date.data = activities1.date
+				form.a1_start.data = activities1.start
+				form.a1_end.data = activities1.end
+				form.a1_comments1.data = activities1.comments
+			elif i == 2:
+				form.a2_name1.data = activities1.name
+				form.a2_location.data = activities1.location
+				form.a2_date.data = activities1.date
+				form.a2_start.data = activities1.start
+				form.a2_end.data = activities1.end
+				form.a2_comments1.data = activities1.comments
+			elif i == 3:
+				form.a3_name1.data = activities1.name
+				form.a3_location.data = activities1.location
+				form.a3_date.data = activities1.date
+				form.a3_start.data = activities1.start
+				form.a3_end.data = activities1.end
+				form.a3_comments1.data = activities1.comments
+			i+=1
 
-	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights, accommodation=accommodation, activities=activities, form=form)
+	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights, accommodation=accommodation, activities=activities, form=form, activity_count=activity_count)
 

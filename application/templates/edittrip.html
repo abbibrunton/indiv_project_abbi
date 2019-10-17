@@ -2,8 +2,8 @@
 {% block body_content %}
 
 	<h1>{{ title }}</h1>
-	{{ posts.name }}
-<p>enter the details of your outbound flight</p>
+	<b> trip name: {{ posts.name }} </b>
+<p><b>outbound flight</b></p>
 <form action="", method="post">	
 	{{ form.hidden_tag() }}
 		<div class="form-group">
@@ -60,7 +60,7 @@
 		<br>
 
 
-		<p>enter the details of your inbound flight</p>
+		<p><b>inbound flight</b></p>
 		<div class="form-group">
 				date:
 				<input type="date" name="date2">
@@ -113,6 +113,7 @@
 				<input type="time" name="time_a_l1">
 		</div>
 		<br>
+		<p><b>accommodation</b></p>
 		<div class="form-group">
 			{{ form.name.label }}
 			{{ form.name }}
@@ -173,12 +174,14 @@
 			{% endif %}
 		</div>
 		<br>
+		{% if activity_count >= 1 %}
+		<p><b>activity 1</b></p>
 		<div class="form-group">
-			{{ form.name1.label }}
-			{{ form.name1 }}
-			{% if form.name1.errors %}
+			{{ form.a1_name1.label }}
+			{{ form.a1_name1 }}
+			{% if form.a1_name1.errors %}
 			<div class="error">
-					{% for error in form.name1.errors %}
+					{% for error in form.a1_name1.errors %}
 					<span>{{ error }}</span>
 				{% endfor %}
 			</div>
@@ -186,11 +189,11 @@
 		</div>
 		<br>
 		<div class="form-group">
-			{{ form.location.label }}
-			{{ form.location }}
-			{% if form.location.errors %}
+			{{ form.a1_location.label }}
+			{{ form.a1_location }}
+			{% if form.a1_location.errors %}
 			<div class="error">
-				{% for error in form.location.errors %}
+				{% for error in form.a1_location.errors %}
 				<span>{{ error }}</span>
 				{% endfor %}
 			</div>
@@ -200,33 +203,154 @@
 		<div class="form-group">
 			<form action="/action_page.php">
 				date:
-				<input type="date" name="date">
+				<input type="date" name="a1_date">
 		</div>
 		<br>
 		<div class="form-group">
 			<form action="/action_page.php">
 				start time:
-				<input type="time" name="start">
+				<input type="time" name="a1_start">
 		</div>
 		<br>
 		<div class="form-group">
 			<form action="/action_page.php">
 				end time:
-				<input type="time" name="end">
+				<input type="time" name="a1_end">
 		</div>
 		<br>
 		<div class="form-group">
-			{{ form.comments1.label }}
-			{{ form.comments1 }}
-			{% if form.comments1.errors %}
+			{{ form.a1_comments1.label }}
+			{{ form.a1_comments1 }}
+			{% if form.a1_comments1.errors %}
 			<div class="error">
-					{% for error in form.comments1.errors %}
+					{% for error in form.a1_comments1.errors %}
 					<span>{{ error }}</span>
 				{% endfor %}
 			</div>
 			{% endif %}
 		<br>
-		{{ form.submit }}
+		{{ form.delete_a1 }}
+		<br>
+		<br>
+		{% if activity_count >= 2 %}
+		<p><b>activity 2</b></p>
+		<div class="form-group">
+			{{ form.a2_name1.label }}
+			{{ form.a2_name1 }}
+			{% if form.a2_name1.errors %}
+			<div class="error">
+					{% for error in form.a2_name1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.a2_location.label }}
+			{{ form.a2_location }}
+			{% if form.a2_location.errors %}
+			<div class="error">
+				{% for error in form.a2_location.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="a2_date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				start time:
+				<input type="time" name="a2_start">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				end time:
+				<input type="time" name="a2_end">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.a2_comments1.label }}
+			{{ form.a2_comments1 }}
+			{% if form.a2_comments1.errors %}
+			<div class="error">
+					{% for error in form.a2_comments1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		<br>
+		{{ form.delete_a2 }}
+		<br>
+		<br>
+		{% if activity_count == 3 %}
+		<p><b>activity 3</b></p>
+		<div class="form-group">
+			{{ form.a3_name1.label }}
+			{{ form.a3_name1 }}
+			{% if form.a3_name1.errors %}
+			<div class="error">
+					{% for error in form.a3_name1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.a3_location.label }}
+			{{ form.a3_location }}
+			{% if form.a3_location.errors %}
+			<div class="error">
+				{% for error in form.a3_location.errors %}
+				<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				date:
+				<input type="date" name="a3_date">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				start time:
+				<input type="time" name="a3_start">
+		</div>
+		<br>
+		<div class="form-group">
+			<form action="/action_page.php">
+				end time:
+				<input type="time" name="a3_end">
+		</div>
+		<br>
+		<div class="form-group">
+			{{ form.a3_comments1.label }}
+			{{ form.a3_comments1 }}
+			{% if form.a3_comments1.errors %}
+			<div class="error">
+					{% for error in form.a3_comments1.errors %}
+					<span>{{ error }}</span>
+				{% endfor %}
+			</div>
+			{% endif %}
+		<br>
+		{{ form.delete_a3 }}
+		<br>
+		{% endif %}
+		{% endif %}
+		{% endif %}
+		{{ form.submit }} {{ form.delete }}
 		</div>
 </form>
 
