@@ -56,8 +56,8 @@ class UpdateAccountForm(FlaskForm):
 	first_name = StringField('first name: ', validators=[DataRequired(), Length(min=2, max=30)])
 	last_name = StringField('last name: ', validators=[DataRequired(), Length(min=2, max=30)])
 	email = StringField('email: ', validators=[DataRequired(), Email()])
-	submit = SubmitField('confirm: ')
-	delete = SubmitField('delete account: ')
+	submit = SubmitField('confirm')
+	delete = SubmitField('delete account')
 
 	def validate_email(self, email):
 		if email.data != current_user.email:

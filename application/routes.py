@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request
-from application import app, db, bcrypt
+from application import app, db, bcrypt, login_manager
 from application.models import Posts, Users, Flights, Accommodation, Activities
 from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm, FlightForm, AccommodationForm, ActivitiesForm, EditForm
 from flask_login import login_user, current_user, logout_user, login_required
@@ -9,6 +9,9 @@ from flask_login import login_user, current_user, logout_user, login_required
 # login required forces user to be logged in
 
 cycle = []
+@login_manager.user_loader #gets id from session
+def load_user(id):
+	return Users.query.get(int(id))
 
 @app.route('/')
 @app.route('/home')
@@ -121,6 +124,7 @@ def account():
 def flights():
 	form = FlightForm()
 	cycle = []
+	extra = ''
 	for field in form:
 		if field.type == 'SelectField':
 			field.choices = cycle
@@ -130,33 +134,43 @@ def flights():
 	form.holiday1.choices = cycle
 	
 	if form.validate_on_submit():
-		flightData = Flights(
-			holiday1 = str(form.holiday1.data),
-			date1 = str(form.date1.data),
-			depart = str(form.depart.data),
-			time_d = str(form.time_d.data),
-			arrive = str(form.arrive.data),
-			time_a = str(form.time_a.data),
-			time_a_l = str(form.time_a_l.data),
-			date2 = str(form.date2.data),
-			depart1 = str(form.depart1.data),
-			time_d1 = str(form.time_d1.data),
-			arrive1 = str(form.arrive1.data),
-			time_a1 = str(form.time_a1.data),
-			time_a_l1 = str(form.time_a_l1.data),
-			author = current_user
-		)
-		db.session.add(flightData)
-		db.session.commit()
-		return redirect(url_for('accommodation'))
+		amount = Flights.query.filter_by(holiday1=str(form.holiday1.data)).all()
+		if amount:
+			amount = len(amount)
+		else:
+			amount = 0
+		if amount < 1:
+			flightData = Flights(
+				holiday1 = str(form.holiday1.data),
+				date1 = str(form.date1.data),
+				depart = str(form.depart.data),
+				time_d = str(form.time_d.data),
+				arrive = str(form.arrive.data),
+				time_a = str(form.time_a.data),
+				time_a_l = str(form.time_a_l.data),
+				date2 = str(form.date2.data),
+				depart1 = str(form.depart1.data),
+				time_d1 = str(form.time_d1.data),
+				arrive1 = str(form.arrive1.data),
+				time_a1 = str(form.time_a1.data),
+				time_a_l1 = str(form.time_a_l1.data),
+				author = current_user
+			)
+			db.session.add(flightData)
+			db.session.commit()
+			return redirect(url_for('accommodation'))
+		else:
+			extra = 'you can only have up to 1 flight per trip. please edit your existing flight or choose another trip.'
 	else:
-		return render_template('flights.html', title='flights', form=form)
+		print(form.errors)
+	return render_template('flights.html', title='flights', form=form, more=extra)
 
 @app.route('/accommodation', methods=['GET','POST'])
 @login_required
 def accommodation():
 	form = AccommodationForm()
 	cycle = []
+	extra = ''
 	for field in form:
 		if field.type == 'SelectField':
 			field.choices = cycle
@@ -166,29 +180,38 @@ def accommodation():
 	form.holiday1.choices = cycle
 
 	if form.validate_on_submit():
-		accommodationData = Accommodation(
-			holiday1 = str(form.holiday1.data),
-			name = form.name.data,
-			address = form.address.data,
-			arr_date = form.arr_date.data,
-			in_time = form.in_time.data,
-			out_date = form.out_date.data,
-			out_time = form.out_time.data,
-			comments = form.comments.data,
-			author = current_user
-		)
-		db.session.add(accommodationData)
-		db.session.commit()
-		return redirect(url_for('activities'))
+		amount = Flights.query.filter_by(holiday1=str(form.holiday1.data)).all()
+		if amount:
+			amount = len(amount)
+		else:
+			amount = 0
+		if amount < 1:
+			accommodationData = Accommodation(
+				holiday1 = str(form.holiday1.data),
+				name = form.name.data,
+				address = form.address.data,
+				arr_date = form.arr_date.data,
+				in_time = form.in_time.data,
+				out_date = form.out_date.data,
+				out_time = form.out_time.data,
+				comments = form.comments.data,
+				author = current_user
+			)
+			db.session.add(accommodationData)
+			db.session.commit()
+			return redirect(url_for('activities'))
+		else:
+			extra = 'you can only have up to 1 accommodation per trip. please edit your existing accommodation or choose another trip.'
 	else:
 		print(form.errors)
-		return render_template('accommodation.html', title='accommodation', form=form)
+	return render_template('accommodation.html', title='accommodation', form=form, more=extra)
 
 @app.route('/activities', methods=['GET','POST'])
 @login_required
 def activities():
 	form = ActivitiesForm()
 	cycle = []
+	extra = ''
 	for field in form:
 		if field.type == 'SelectField':
 			field.choices = cycle
@@ -198,38 +221,31 @@ def activities():
 	form.holiday1.choices = cycle
 
 	if form.validate_on_submit():
-		activitiesData = Activities(
-			holiday1 = str(form.holiday1.data),
-			name = form.name.data,
-			location = form.location.data,
-			date = form.date.data,
-			start = form.start.data,
-			end = form.end.data,
-			comments = form.comments.data,
-			author = current_user
-		)
-		db.session.add(activitiesData)
-		db.session.commit()
-		if form.another.data:
-			return redirect(url_for('activities'))
+		amount = Activities.query.filter_by(holiday1=str(form.holiday1.data)).all()
+		if amount:
+			amount = len(amount)
 		else:
-			return redirect(url_for('home'))
-	elif form.cancel.data:
-		return redirect(url_for('home'))
+			amount = 0
+		if amount < 3:
+			activitiesData = Activities(
+				holiday1 = str(form.holiday1.data),
+				name = form.name.data,
+				location = form.location.data,
+				date = form.date.data,
+				start = form.start.data,
+				end = form.end.data,
+				comments = form.comments.data,
+				author = current_user
+			)
+			db.session.add(activitiesData)
+			db.session.commit()
+			if form.another.data:
+				return redirect(url_for('activities'))
+		else:
+			extra = 'you can only have up to 3 activities per trip. please delete one and try again.'
 	else:
 		print(form.errors)
-		return render_template('activities.html', title='activities', form=form)
-
-
-@app.route('/trip', methods=['GET','POST'])
-def trip():
-	postData = Posts.query.filter_by(user_id=current_user.id).all()
-	flightData = Flights.query.all()
-	accommodationData = Accommodation.query.all()
-	activitiesData = Activities.query.all()
-
-
-	return render_template('trip.html', title='your trip', posts=postData, flights=flightData, activities=activitiesData, accommodation=accommodationData)
+	return render_template('activities.html', title='activities', form=form, more=extra)
 
 @app.route('/edit', methods=['GET','POST'])
 def edit():
@@ -251,6 +267,9 @@ def edittrip(trip_id):
 		db.session.delete(accommodation)
 		for i in activity:
 			db.session.delete(i)
+		db.session.commit()
+		return redirect(url_for('edit'))
+
 	if form.is_submitted():
 		if form.date1.data:
 			flights.date1 = form.date1.data
@@ -283,7 +302,8 @@ def edittrip(trip_id):
 			accommodation.out_date = form.out_date.data
 		if form.out_time.data:
 			accommodation.out_time = form.out_time.data
-		accommodation.comments = form.comments.data
+		if accommodation.comments.data:
+			accommodation.comments = form.comments.data
 		i=1
 		for j in activity:
 			activity_id = j.id
@@ -297,7 +317,12 @@ def edittrip(trip_id):
 					activities1.start = form.a1_start.data
 				if form.a1_end.data:
 					activities1.end = form.a1_end.data
-				activities1.comments = form.a1_comments1.data
+				if activities1.comments.data:
+					activities1.comments = form.a1_comments1.data
+
+				if form.delete_a1.data:
+					Activities.query.filter_by(id=activity_id).delete()
+
 			elif i == 2:
 				activities1.name = form.a2_name1.data
 				activities1.location = form.a2_location.data
@@ -307,7 +332,10 @@ def edittrip(trip_id):
 					activities1.start = form.a2_start.data
 				if form.a2_end.data:
 					activities1.end = form.a2_end.data
-				activities1.comments = form.a2_comments1.data
+				if activities1.comments.data:
+					activities1.comments = form.a2_comments1.data
+				if form.delete_a2.data:
+					Activities.query.filter_by(id=activity_id).delete()
 			elif i == 3:
 				activities1.name = form.a3_name1.data
 				activities1.location = form.a3_location.data
@@ -317,7 +345,10 @@ def edittrip(trip_id):
 					activities1.start = form.a3_start.data
 				if form.a3_end.data:
 					activities1.end = form.a3_end.data
-				activities1.comments = form.a3_comments1.data
+				if activities1.comments.data:
+					activities1.comments = form.a3_comments1.data
+				if form.delete_a3.data:
+					Activities.query.filter_by(id=activity_id).delete()
 			i+=1
 
 		db.session.commit()
@@ -374,3 +405,17 @@ def edittrip(trip_id):
 
 	return render_template('edittrip.html', title='edit trip', trip_id=trip_id, posts=posts, flights=flights, accommodation=accommodation, activities=activities, form=form, activity_count=activity_count)
 
+@app.errorhandler(404)
+def notfound_found(error):
+	return render_template('error.html', title='error')
+
+
+@app.route('/viewtrip/<int(min=1):trip_id>', methods=['GET'])
+def viewtrip(trip_id):
+	posts=Posts.query.filter_by(id=trip_id).first()
+	flight=Flights.query.filter_by(holiday1=posts.name).first()
+	accommodation=Accommodation.query.filter_by(holiday1=posts.name).first()
+	activity=Activities.query.filter_by(holiday1=posts.name).all()
+
+
+	return render_template('viewtrip.html', title='your trip', posts=posts, flight=flight, activities=activity, accommodation=accommodation)
