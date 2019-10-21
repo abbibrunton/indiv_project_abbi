@@ -302,8 +302,7 @@ def edittrip(trip_id):
 			accommodation.out_date = form.out_date.data
 		if form.out_time.data:
 			accommodation.out_time = form.out_time.data
-		if accommodation.comments.data:
-			accommodation.comments = form.comments.data
+		accommodation.comments = form.comments.data
 		i=1
 		for j in activity:
 			activity_id = j.id
@@ -317,8 +316,7 @@ def edittrip(trip_id):
 					activities1.start = form.a1_start.data
 				if form.a1_end.data:
 					activities1.end = form.a1_end.data
-				if activities1.comments.data:
-					activities1.comments = form.a1_comments1.data
+				activities1.comments = form.a1_comments1.data
 
 				if form.delete_a1.data:
 					Activities.query.filter_by(id=activity_id).delete()
@@ -332,8 +330,7 @@ def edittrip(trip_id):
 					activities1.start = form.a2_start.data
 				if form.a2_end.data:
 					activities1.end = form.a2_end.data
-				if activities1.comments.data:
-					activities1.comments = form.a2_comments1.data
+				activities1.comments = form.a2_comments1.data
 				if form.delete_a2.data:
 					Activities.query.filter_by(id=activity_id).delete()
 			elif i == 3:
@@ -345,8 +342,7 @@ def edittrip(trip_id):
 					activities1.start = form.a3_start.data
 				if form.a3_end.data:
 					activities1.end = form.a3_end.data
-				if activities1.comments.data:
-					activities1.comments = form.a3_comments1.data
+				activities1.comments = form.a3_comments1.data
 				if form.delete_a3.data:
 					Activities.query.filter_by(id=activity_id).delete()
 			i+=1
