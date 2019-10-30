@@ -180,7 +180,7 @@ def accommodation():
 	form.holiday1.choices = cycle
 
 	if form.validate_on_submit():
-		amount = Flights.query.filter_by(holiday1=str(form.holiday1.data)).all()
+		amount = Accommodation.query.filter_by(holiday1=str(form.holiday1.data)).all()
 		if amount:
 			amount = len(amount)
 		else:
@@ -241,6 +241,8 @@ def activities():
 			db.session.commit()
 			if form.another.data:
 				return redirect(url_for('activities'))
+			else:
+				return redirect(url_for('edit'))
 		else:
 			extra = 'you can only have up to 3 activities per trip. please delete one and try again.'
 	else:

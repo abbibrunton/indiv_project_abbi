@@ -8,7 +8,7 @@ alias deactivate 'test $?_OLD_VIRTUAL_PATH != 0 && setenv PATH "$_OLD_VIRTUAL_PA
 # Unset irrelavent variables.
 deactivate nondestructive
 
-setenv VIRTUAL_ENV "/home/abbi/Flask_App/venv"
+setenv VIRTUAL_ENV "/home/abbibrunton42/indiv_project_abbi/application/venv"
 
 set _OLD_VIRTUAL_PATH="$PATH"
 setenv PATH "$VIRTUAL_ENV/bin:$PATH"

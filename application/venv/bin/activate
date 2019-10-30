@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelavent variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/abbi/Flask_App/venv"
+VIRTUAL_ENV="/home/abbibrunton42/indiv_project_abbi/application/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
