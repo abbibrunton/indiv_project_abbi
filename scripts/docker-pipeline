@@ -1,0 +1,27 @@
+pipeline{
+    agent any
+    stages{ 
+		stage('---Build_Image---'){
+            steps{
+                sh "sudo docker build -t cocktail ."
+            }
+        }
+    stage('---Clean_Container---'){
+        steps{
+            sh label: '', script: 
+            '''
+            if [ "$(sudo docker ps -qa -f name=cocktail)" ]; then
+                    sudo docker rm -f cocktail
+            fi
+            '''
+        }
+    }
+    stage('---Build_Container---'){
+        steps{
+            sh "label: '', script: 
+            '''
+            "sudo docker run -d --name cocktail -p 8888:8888 cocktail"
+            '''
+        }
+    }
+}
