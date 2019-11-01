@@ -3,13 +3,8 @@ pipeline{
     stages{ 
 		stage('---Build_Image---'){
             steps{
-                sh label: '', script:
-		'''
-		if [ ! "$(cat /etc/passwd | grep pythonadm)" ];
-  		then sudo useradd -m -s /bin/bash pythonadm
-		fi
-		sudo docker build -t indiv-project:latest .
-		'''
+                sh "sudo docker build -t indiv-project:latest ."
+		
             }
         }
         stage('---Clean_Container---'){
