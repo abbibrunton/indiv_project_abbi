@@ -1,3 +1,5 @@
+#cd into the correct directory
+cd ..
 # install the service script
 sudo cp flask-app.service /etc/systemd/system/
 # reload the service scripts
