@@ -19,6 +19,7 @@ sudo su - pythonadm << EOF
 cd ${install_dir}
 virtualenv -p python3 venv
 source venv/bin/activate
+pip3 install -r requirements.txt
 EOF
 # start the flask app
 sudo systemctl start flask-app
