@@ -3,12 +3,11 @@ welcome to my app! this is a handy travel itinerary app for planning your next h
 
 ### prerequisites:
   sudo apt-get -y update
+  
   sudo apt-get -y install python3
+  
   sudo apt-get -y install python3-pip
-  sudo apt-get -y install python3-venv
-  sudo apt-get -y install virtualenv
-  sudo pip3 install -r requirements.txt
-
+  
 ## running the app
 
 ### local:
@@ -17,6 +16,7 @@ welcome to my app! this is a handy travel itinerary app for planning your next h
 
 ### systemd:
   this app can be run using systemd. use the systemd-install.sh script provided in the scripts folder to do this.
+  if you are using gcp to run the app, you can run it using http://[EXTERNAL IP]:5000
 
 ### docker:
   once you have cloned down the repository you can use the dockerfile to run the application.
