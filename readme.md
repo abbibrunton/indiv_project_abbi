@@ -10,8 +10,10 @@ welcome to my app! this is a handy travel itinerary app for planning your next h
   sudo pip3 install -r requirements.txt
 
 ## running the app
+
 ### local:
-  if you want to run the app locally on your computer, run the local-install.sh script in the scripts folder. 
+  if you want to run the app locally on your computer, run the local-install.sh script in the scripts folder.
+  you can access the app by navigating to localhost:5000 in your web browser
 
 ### systemd:
   this app can be run using systemd. use the systemd-install.sh script provided in the scripts folder to do this.
@@ -19,3 +21,5 @@ welcome to my app! this is a handy travel itinerary app for planning your next h
 ### docker:
   once you have cloned down the repository you can use the dockerfile to run the application.
   you can do this by using docker-install.sh. this will check if docker is already installed (and install it if not) and then check if the container has already been created (and delete it if it has). then it will build the docker container from the image provided and run the application.
+  
+  if you are using gcp to run the app, you can run it using http://[EXTERNAL IP]:5000
