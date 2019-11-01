@@ -1,7 +1,9 @@
 #cd into the correct directory
 cd ..
-#add pythonadm
-sudo useradd -m -s /bin/bash pythonadm
+#check for pythonadm and add if it doesn't exist
+if [ ! "$(cat /etc/passwd | grep pythonadm)" ];
+  then sudo useradd -m -s /bin/bash pythonadm
+fi
 # install the service script
 sudo cp flask-app.service /etc/systemd/system/
 # reload the service scripts
