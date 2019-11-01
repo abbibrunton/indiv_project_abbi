@@ -17,4 +17,5 @@ welcome to my app! this is a handy travel itinerary app for planning your next h
   this app can be run using systemd. use the systemd-install.sh script provided in the scripts folder to do this.
 
 ### docker:
-  1. use the jenkins file provided to do something 
+  once you have cloned down the repository you can use the dockerfile to run the application.
+  you can do this by using docker-install.sh. this will check if docker is already installed (and install it if not) and then check if the container has already been created (and delete it if it has). then it will build the docker container from the image provided and run the application.
