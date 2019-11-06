@@ -27,4 +27,4 @@ if you want to run anything from the scripts folder, do the following:
   once you have cloned down the repository you can use the dockerfile to run the application.
   you can do this by using docker-install.sh. this will check if docker is already installed (and install it if not) and then check if the container has already been created (and delete it if it has). then it will build the docker container from the image provided and run the application.
   
-  if you are using gcp to run the app, you can run it using http://<EXTERNAL IP>:5000
+  if you are using gcp to run the app, you can run it using http://EXTERNAL IP:5000
