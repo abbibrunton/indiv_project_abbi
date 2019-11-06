@@ -34,4 +34,4 @@ if you want to run anything from the scripts folder, do the following:
 ### automation:
   
   a jenkinsfile has been provided which allows you to automate the deployment of the app
-  you should set up the project as a pipeline and use a webhook to connect it to this repository
+  you should set up the project as a pipeline and tick 'github hook trigger for scm polling' under build triggers. under pipeline, change the definition to a pipeline script from SCM. select git as the SCM and paste in the root of this repository.
