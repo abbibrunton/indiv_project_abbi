@@ -34,3 +34,4 @@ if you want to run anything from the scripts folder, do the following:
 ### automation:
   
   a jenkinsfile has been provided which allows you to automate the deployment of the app
+  you should set up the project as a pipeline and use a webhook to connect it to this repository
