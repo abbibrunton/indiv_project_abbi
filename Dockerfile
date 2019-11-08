@@ -3,6 +3,7 @@ RUN apt-get update
 RUN apt-get -y install python3
 RUN apt-get -y install python3-pip
 RUN pip3 install --upgrade pip
+RUN apt install -y netcat
 WORKDIR /app
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt
@@ -15,4 +16,4 @@ ENV FLASK_RUN_KEY key.pem
 ENV LC_ALL C.UTF-8
 ENV LANG C.UTF-8
 COPY . .
-ENTRYPOINT ["/usr/local/bin/python3", "run.py"]
+ENTRYPOINT ["./init.sh"]
