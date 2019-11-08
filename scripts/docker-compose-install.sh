@@ -18,4 +18,4 @@ fi
 #deleting network
 docker network rm indiv_project_abbi_default
 #running docker-compose
-sudo docker-compose up -d
+sudo docker-compose up -d --build
