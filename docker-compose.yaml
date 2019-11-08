@@ -12,3 +12,9 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=project_db
+    volumes:
+      - type: volume
+        source: mysql-vol
+        target: "/var/lib/mysql"
+volumes:
+  mysql-vol:
