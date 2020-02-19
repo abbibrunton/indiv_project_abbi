@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from application.models import Users, Posts
 from application import bcrypt, login_manager, app
 from flask_login import current_user
-
+# goodbye
 # @app.context_processor
 # def login_fix():
 # 	import flask_login
